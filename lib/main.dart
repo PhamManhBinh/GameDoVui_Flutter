@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 
 import 'package:quizapp/screen/welcome.dart';
 import 'package:quizapp/service/httpservice.dart';
 import 'package:dio/dio.dart';
-import 'package:quizapp/util/util.dart';
 import 'controller/questionController.dart';
 import 'model/question.dart';
 
 void main() {
+  //splash screen
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+
   //load data
-  final dio = Dio();
-  final client = HttpService(dio);
-  client.getQuestions().then((data){
-        Widget myApp = MyApp(data); //pass data to app
-        runApp(myApp);
-      });
+  HttpService(Dio()).getQuestions().then((data) {
+    Widget myApp = MyApp(data); //pass data to app
+    runApp(myApp);
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -27,8 +31,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final QuestionController _questionController = Get.put(QuestionController());
+    final QuestionController _questionController =
+        Get.put(QuestionController());
     _questionController.setQuestions(questions);
+    FlutterNativeSplash.remove(); //remove splash screen
     return MainApp();
   }
 
@@ -39,6 +45,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Welcome(),
+      builder: EasyLoading.init(),
     );
   }
 }

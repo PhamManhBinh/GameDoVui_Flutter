@@ -57,6 +57,8 @@ import 'package:quizapp/model/question.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
+import '../model/score.dart';
+
 part 'httpservice.g.dart';
 
 @RestApi(baseUrl: "https://xinloiduocchua.xyz/quizapp/")
@@ -65,4 +67,12 @@ abstract class HttpService {
 
   @GET("/question.php")
   Future<List<Question>> getQuestions();
+
+  @GET("/score.php")
+  Future<List<Score>> getScores();
+
+  @POST("/score.php")
+  @FormUrlEncoded()
+  Future<List<Score>> newScore(@Field() String name,@Field() int score);
+
 }

@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quizapp/main.dart';
 import 'package:quizapp/screen/quiz.dart';
-
-import '../controller/questionController.dart';
 
 class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //final QuestionController _questionController = Get.put(QuestionController());
-    //_questionController.initDataController();
     String name = "";
     return Scaffold(
       body: Stack(
@@ -37,7 +32,6 @@ class Welcome extends StatelessWidget {
                       Text('Nhập tên của bạn:'),
                       Spacer(),
                       TextField(
-
                         onChanged: (text) {
                           name = text;
                         },

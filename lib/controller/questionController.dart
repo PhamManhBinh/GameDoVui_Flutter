@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:confetti/confetti.dart';
-import 'dart:io';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:quizapp/util/util.dart';
 import 'package:quizapp/screen/score.dart';
@@ -16,10 +14,11 @@ import '../model/question.dart';
 
 class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
-
   late String _name;
+
   String get name => this._name;
-  set name(text){
+
+  set name(text) {
     _name = text;
   }
 
@@ -31,6 +30,7 @@ class QuestionController extends GetxController
 
   //question data
   late List<Question> _questions = <Question>[];
+
   List<Question> get questions => this._questions;
 
   late bool _isAnswered;
@@ -54,16 +54,15 @@ class QuestionController extends GetxController
 
   RxInt get numOfCorrectAns => this._numOfCorrectAns;
 
-  ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 10));
+  ConfettiController _confettiController =
+      ConfettiController(duration: const Duration(seconds: 10));
 
   @override
   void onInit() async {
-
     //use retrofit to get data from Web API;
     // final dio = Dio();
     // final client = HttpService(dio);
     // client.getQuestions().then((data) => _questions = data);
-
 
     // TODO: implement onInit
     _animationController =
@@ -84,7 +83,7 @@ class QuestionController extends GetxController
     _animationController.dispose();
   }
 
-  void initDataController(){
+  void initDataController() {
     _name = "";
     _isAnswered = false;
     _correctAns = 0;
@@ -95,23 +94,24 @@ class QuestionController extends GetxController
   }
 
   void checkAnswer(int selectAnswer) {
-    if(_isAnswered == true) return;
+    if (_isAnswered == true) return;
 
     _isAnswered = true;
     _correctAns = _questions[_currentQuestion.value].true_answer;
     _selectedAns = selectAnswer;
 
-
-    if (_correctAns == _selectedAns) {;
+    if (_correctAns == _selectedAns) {
+      ;
       log("dung");
       _numOfCorrectAns++;
-      Util.ShowToast("Chúc mừng! Bạn đã chọn đáp án đúng !",Colors.red,Colors.white);
+      Util.ShowToast(
+          "Chúc mừng! Bạn đã chọn đáp án đúng !", Colors.red, Colors.white);
       Util.startAnimationWhenChooseTrueAnswer();
     } else {
-      Util.ShowToast("Rất tiếc, câu trả lời chưa chính xác !",Colors.black12,Colors.white);
+      Util.ShowToast("Rất tiếc, câu trả lời chưa chính xác !", Colors.black12,
+          Colors.white);
       log("sai");
     }
-
 
     _animationController.stop();
     update();
@@ -128,14 +128,18 @@ class QuestionController extends GetxController
       _currentQuestion.value += 1;
 
       resetCounter();
-
     } else {
-      Get.to(()=>Score());
+      EasyLoading.show(status: 'Loading...');
+      HttpService(Dio())
+          .newScore(name, _numOfCorrectAns.value * 10)
+          .then((value) {
+        EasyLoading.dismiss();
+        Get.offAll(() => Score());
+      });
     }
   }
 
-
-  void resetCounter(){
+  void resetCounter() {
     // Reset the counter
     _animationController.reset();
 
@@ -144,9 +148,7 @@ class QuestionController extends GetxController
     _animationController.forward().whenComplete(nextQuestion);
   }
 
-  void setQuestions(List<Question> questions){
+  void setQuestions(List<Question> questions) {
     this._questions = questions;
   }
-
-
 }
