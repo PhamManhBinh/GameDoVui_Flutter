@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizapp/screen/quiz.dart';
+import 'package:quizapp/util/util.dart';
 
 class Welcome extends StatelessWidget {
   @override
@@ -24,10 +25,14 @@ class Welcome extends StatelessWidget {
                       Spacer(),
                       Text(
                         'Đố Vui',
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text('Nhập tên của bạn:'),
                       Spacer(),
@@ -40,14 +45,19 @@ class Welcome extends StatelessWidget {
                           fillColor: Colors.amber,
                           border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
+                              BorderRadius.all(Radius.circular(12))),
                           hintText: 'Họ Tên',
                         ),
                       ),
                       Spacer(),
                       OutlinedButton(
-                          onPressed: () =>
-                              {Get.to(() => Quiz(), arguments: name)},
+                          onPressed: () {
+                            if(name == ""){
+                              Util.ShowToast("Vui lòng nhập tên người chơi", Colors.grey, Colors.white);
+                              return;
+                            }
+                            Get.to(() => Quiz(), arguments: name);
+                          },
                           child: Text('OK')),
                       Spacer(),
                     ],

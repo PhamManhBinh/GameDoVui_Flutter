@@ -14,7 +14,6 @@ void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-
   //load data
   HttpService(Dio()).getQuestions().then((data) {
     Widget myApp = MyApp(data); //pass data to app

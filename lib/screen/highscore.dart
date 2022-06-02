@@ -28,48 +28,55 @@ class HighScore extends StatelessWidget {
                 //Spacer(flex: 3),
                 Text('Điểm cao'),
                 //Spacer(),
-                FutureBuilder<List<Score>>(
-                  future: HttpService(Dio()).getScores(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasData) {
-                      final data = snapshot.data!;
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(60),
-                        itemCount: (data.length < 7 ) ? data.length + 1 : 7,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return ListTile(
-                                title: Row(
-                              children: [
-                                Expanded(child: Text("Rank")),
-                                Expanded(child: Text("Họ Tên")),
-                                Expanded(child: Text("Điểm Số"))
-                              ],
-                            ));
-                          }
-                          index--;
-                          return ListTile(
-                              title: Row(
-                            children: [
-                              Expanded(child: Text((index + 1).toString())),
-                              Expanded(child: Text(data[index].name)),
-                              Expanded(
-                                  child: Text(data[index].score.toString()))
-                            ],
-                          ));
-                        },
-                      );
-                    } else {
-                      return Text("Không có dữ liệu");
-                    }
-                  },
-                )
+                buildFutureBuilder()
               ],
             ))
           ],
         ));
+  }
+
+  FutureBuilder<List<Score>> buildFutureBuilder() {
+    return FutureBuilder<List<Score>>(
+      future: HttpService(Dio()).getScores(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasData) {
+          final data = snapshot.data!;
+          return buildListView(data);
+        } else {
+          return Text("Không có dữ liệu");
+        }
+      },
+    );
+  }
+
+  ListView buildListView(List<Score> data) {
+    return ListView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.all(60),
+      itemCount: (data.length < 7) ? data.length + 1 : 7,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return ListTile(
+              title: Row(
+            children: [
+              Expanded(child: Text("Rank")),
+              Expanded(child: Text("Họ Tên")),
+              Expanded(child: Text("Điểm Số"))
+            ],
+          ));
+        }
+        index--;
+        return ListTile(
+            title: Row(
+          children: [
+            Expanded(child: Text("#${(index + 1).toString()}")),
+            Expanded(child: Text(data[index].name)),
+            Expanded(child: Text(data[index].score.toString()))
+          ],
+        ));
+      },
+    );
   }
 }

@@ -108,7 +108,7 @@ class QuestionController extends GetxController
           "Chúc mừng! Bạn đã chọn đáp án đúng !", Colors.red, Colors.white);
       Util.startAnimationWhenChooseTrueAnswer();
     } else {
-      Util.ShowToast("Rất tiếc, câu trả lời chưa chính xác !", Colors.black12,
+      Util.ShowToast("Rất tiếc, câu trả lời chưa chính xác !", Colors.grey,
           Colors.white);
       log("sai");
     }
