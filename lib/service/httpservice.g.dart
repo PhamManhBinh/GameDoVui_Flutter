@@ -10,7 +10,7 @@ part of 'httpservice.dart';
 
 class _HttpService implements HttpService {
   _HttpService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://xinloiduocchua.xyz/quizapp/';
+    baseUrl ??= 'http://10.0.2.2:3000/';
   }
 
   final Dio _dio;
@@ -26,7 +26,7 @@ class _HttpService implements HttpService {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<Question>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/question.php',
+                .compose(_dio.options, '/api/Question',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
@@ -43,7 +43,7 @@ class _HttpService implements HttpService {
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<Score>>(
         Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/score.php',
+            .compose(_dio.options, '/api/Score',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
@@ -64,7 +64,7 @@ class _HttpService implements HttpService {
                 headers: _headers,
                 extra: _extra,
                 contentType: 'application/x-www-form-urlencoded')
-            .compose(_dio.options, '/score.php',
+            .compose(_dio.options, '/api/Score',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!

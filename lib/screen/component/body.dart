@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizapp/constants.dart';
 import 'package:quizapp/util/util.dart';
 import 'package:quizapp/controller/questionController.dart';
 import 'package:quizapp/screen/component/progressbar.dart';
@@ -12,7 +13,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final QuestionController _questionController = Get.put(QuestionController());
+    final QuestionController _questionController =
+        Get.put(QuestionController());
     return Stack(
       children: [
         Image.asset(
@@ -30,25 +32,29 @@ class Body extends StatelessWidget {
               children: [
                 ProgressBar(),
                 SizedBox(height: 10),
-                Obx(()=>Text.rich(
-                    TextSpan(text: 'Câu hỏi ${_questionController.currentQuestion.value+1}/${_questionController.questions.length}'),
-                    style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.black),
+                Obx(
+                  () => Text.rich(
+                    TextSpan(
+                        text:
+                            'Câu hỏi ${_questionController.currentQuestion.value + 1}/${_questionController.questions.length}'),
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                        color: Color(0xFFEEC83F), fontWeight: FontWeight.bold),
                   ),
                 ),
                 Divider(thickness: 2.0),
                 QuestionCard(),
-                Obx(() =>
-                    Container(
+                Obx(() => Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 10),
+                      margin: EdgeInsets.only(top: 30),
                       child: Text(
-                      'Điểm của bạn: ${_questionController.numOfCorrectAns * 10}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5!
-                          .copyWith(color: Colors.brown)),
-                    )
-                ),
+                          'Điểm của bạn: ${_questionController.numOfCorrectAns * 10}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(
+                                  color: Color.fromARGB(182, 233, 46, 49),
+                                  fontWeight: FontWeight.w500,backgroundColor: Colors.white)),
+                    )),
               ],
             ),
           ),
@@ -57,7 +63,3 @@ class Body extends StatelessWidget {
     );
   }
 }
-
-
-
-

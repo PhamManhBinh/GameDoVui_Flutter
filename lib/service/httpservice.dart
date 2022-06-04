@@ -61,18 +61,34 @@ import '../model/score.dart';
 
 part 'httpservice.g.dart';
 
-@RestApi(baseUrl: "https://xinloiduocchua.xyz/quizapp/")
+@RestApi(baseUrl: "http://10.0.2.2:3000/")
 abstract class HttpService {
   factory HttpService(Dio dio) = _HttpService;
 
-  @GET("/question.php")
+  @GET("/api/Question")
   Future<List<Question>> getQuestions();
 
-  @GET("/score.php")
+  @GET("/api/Score")
   Future<List<Score>> getScores();
 
-  @POST("/score.php")
+  @POST("/api/Score")
   @FormUrlEncoded()
   Future<List<Score>> newScore(@Field() String name,@Field() int score);
 
 }
+
+// @RestApi(baseUrl: "https://xinloiduocchua.xyz/quizapp/")
+// abstract class HttpService {
+//   factory HttpService(Dio dio) = _HttpService;
+//
+//   @GET("/question.php")
+//   Future<List<Question>> getQuestions();
+//
+//   @GET("/score.php")
+//   Future<List<Score>> getScores();
+//
+//   @POST("/score.php")
+//   @FormUrlEncoded()
+//   Future<List<Score>> newScore(@Field() String name,@Field() int score);
+//
+// }

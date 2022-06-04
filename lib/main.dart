@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Đố Vui',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: Welcome(),
       builder: EasyLoading.init(),

@@ -25,9 +25,21 @@ class HighScore extends StatelessWidget {
             SafeArea(
                 child: Column(
               children: [
-                //Spacer(flex: 3),
-                Text('Điểm cao'),
-                //Spacer(),
+                // Spacer(flex: 1,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star, color: Colors.yellow, size: 35),
+                    Text(
+                      'BẢNG XẾP HẠNG',
+                      style: Theme.of(context).textTheme.button?.copyWith(
+                            color: Color(0xFF0054CD),
+                            fontSize: 33,
+                          ),
+                    ),
+                  ],
+                ),
+                // Spacer(),
                 buildFutureBuilder()
               ],
             ))
@@ -54,16 +66,31 @@ class HighScore extends StatelessWidget {
   ListView buildListView(List<Score> data) {
     return ListView.builder(
       shrinkWrap: true,
-      padding: EdgeInsets.all(60),
       itemCount: (data.length < 7) ? data.length + 1 : 7,
       itemBuilder: (context, index) {
         if (index == 0) {
           return ListTile(
               title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(child: Text("Rank")),
-              Expanded(child: Text("Họ Tên")),
-              Expanded(child: Text("Điểm Số"))
+              Expanded(
+                  child: Text(
+                "Rank",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )),
+              Expanded(
+                  child: Text(
+                "Họ Và Tên",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )),
+              Expanded(
+                  child: Text(
+                "Điểm Số",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )),
             ],
           ));
         }
@@ -71,9 +98,57 @@ class HighScore extends StatelessWidget {
         return ListTile(
             title: Row(
           children: [
-            Expanded(child: Text("#${(index + 1).toString()}")),
-            Expanded(child: Text(data[index].name)),
-            Expanded(child: Text(data[index].score.toString()))
+            Expanded(
+                child: Text(
+              "#${(index + 1).toString()}",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: (index == 0 || index == 1 || index == 2)
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                  color: (index == 0)
+                      ? Colors.red[700]
+                      : (index == 1)
+                          ? Colors.yellow
+                          : (index == 2)
+                              ? Colors.green[800]
+                              : Colors.black54),
+            )),
+            Expanded(
+                child: Text(
+              data[index].name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: (index == 0 || index == 1 || index == 2)
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                  color: (index == 0)
+                      ? Colors.red[700]
+                      : (index == 1)
+                          ? Colors.yellow
+                          : (index == 2)
+                              ? Colors.green[800]
+                              : Colors.black54),
+            )),
+            Expanded(
+                child: Text(
+              data[index].score.toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: (index == 0 || index == 1 || index == 2)
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                  color: (index == 0)
+                      ? Colors.red[700]
+                      : (index == 1)
+                          ? Colors.yellow
+                          : (index == 2)
+                              ? Colors.green[800]
+                              : Colors.black54),
+            ))
           ],
         ));
       },

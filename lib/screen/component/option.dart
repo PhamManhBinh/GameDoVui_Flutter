@@ -61,7 +61,7 @@ class OptionState extends State<Option> {
                 children: [
                   Text(
                       "${(widget.index == 0) ? 'A' : (widget.index == 1) ? 'B' : (widget.index == 2) ? 'C' : 'D'}. ${widget.text}",
-                      style: TextStyle(color: Colors.black45, fontSize: 16)
+                      style: TextStyle(color: Colors.black54, fontSize: 18)
                   ),
                   Container(
                     height: 30,
